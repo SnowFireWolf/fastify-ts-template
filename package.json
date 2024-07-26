@@ -1,0 +1,56 @@
+{
+  "name": "fastify-ts-template",
+  "version": "0.0.1",
+  "description": "Fastify TypeScript Dev Template",
+  "main": "./src/server.ts",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup && pnpm copy-files",
+    "build-unix": "tsup",
+    "serve": "cross-env NODE_ENV=production node dist/server.js --prof",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,blue.bold\" \"pnpm watch-tsup\"",
+    "watch-node": "pnpm copy-files && cross-env NODE_ENV=development node dist/server.js",
+    "dev-serve": "cross-env NODE_ENV=development node dist/server.js",
+    "watch-tsup": "tsup ./src/server.ts --watch --onSuccess \"pnpm copy-files && pnpm dev-serve \"",
+    "copy-files": "copyfiles -u 1 src/lang/*.* src/**/*.json dist/"
+  },
+  "tsup": {
+    "entry": [
+      "src/server.ts"
+    ],
+    "splitting": true,
+    "sourcemap": true,
+    "clean": true,
+    "minify": true
+  },
+  "_moduleAliases": {
+    "@": "dist"
+  },
+  "author": "SnowFireWolf",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "fastify": "^4.28.1",
+    "winston": "^3.10.0"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.7.2",
+    "@types/node": "^20.14.12",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "concurrently": "^8.2.2",
+    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "module-alias": "^2.2.3",
+    "nodemon": "^3.1.4",
+    "tsup": "^8.2.3",
+    "typescript": "^5.5.3"
+  }
+}
